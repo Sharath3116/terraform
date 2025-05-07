@@ -8,7 +8,7 @@ terraform {
 
 backend "s3" {
   bucket         = "olavu-practice-remote-state"
-  key            = "foreach"
+  key            = "vpctest"
   region         = "us-east-1"
   dynamodb_table = "practice-locking"
 }

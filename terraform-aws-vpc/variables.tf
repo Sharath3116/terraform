@@ -8,7 +8,7 @@ variable "enable_dns_hostnames" {
     default = true
    
   }
-variable "commong_tags"{
+variable "common_tags"{
     type = map
     default = {}
 }
@@ -18,5 +18,17 @@ variable "vpc_tags" {
     default  = {}
 
 }
-  
 
+variable "project_name" {
+    type = string
+}
+
+variable "environment" {
+    type = string
+}
+
+
+variable "igw_tags" {
+    type = map
+    default = {}
+}

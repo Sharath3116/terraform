@@ -1,22 +1,28 @@
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-      version = "5.97.0"
+variable "vpc_cidr" {
+  type=string
+  default = "10.0.0.0/16" 
+  }
+
+variable "common_tags"{
+    default = {
+        project = "roboshop"
+        terraform = "true"
+        environment = "dev"
     }
- }
-
-backend "s3" {
-  bucket         = "practice-remote-state"
-  key            = "foreach"
-  region         = "us-east-1"
-  dynamodb_table = "practice-locking"
 }
 
+variable "vpc_tags" {
+    type = map
+    default  = {}
 
 }
 
-provider "aws" {
-  region = "us-east-1"
+variable "project_name" {
+    default = "roboshop"
 }
+
+variable "environment" {
+    default = "dev"
+}
+
 
