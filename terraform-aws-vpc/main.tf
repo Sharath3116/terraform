@@ -66,19 +66,18 @@ resource "aws_subnet" "database" {
     }
   )
 }
-  resource "aws_db_subnet_group" "default" {
-      Name = "${local.Name}"
-      subnet_ids = aws_subnet.database[*].id
 
-    tags = {
-      Name = "${local.Name}"
-    }
-         
+resource "aws_db_subnet_group" "default" {
+  name       = local.Name
+  subnet_ids = aws_subnet.database[*].id
+
+  tags = {
+    Name = local.Name
   }
 
-  resource "aws_eip" "eip" {
-    domain = "vpc"
-    }
+  description = "Database subnet group for ${local.Name}"
+}
+
   
 resource "aws_nat_gateway" "main" {
   allocation_id = aws_eip.eip.id
