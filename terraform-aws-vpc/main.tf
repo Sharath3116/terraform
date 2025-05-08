@@ -26,7 +26,6 @@ resource "aws_subnet" "public" {
   vpc_id = aws_vpc.main.id
   cidr_block = var.public_subnets_cidr[count.index]
   availability_zone = local.az_names [count.index]
-  map_public_ip_on_launch = true
   tags = merge (
     var.common_tags,
     var.public_subnets_tags,
@@ -65,19 +64,11 @@ resource "aws_subnet" "database" {
       Name = "${local.Name}-database-${local.az_names [count.index]}"
     }
   )
-}
+    }
 
-resource "aws_db_subnet_group" "default" {
-  name       = local.Name
-  subnet_ids = aws_subnet.database[*].id
-
-  tags = {
-    Name = local.Name
-  }
-
-  description = "Database subnet group for ${local.Name}"
-}
-
+  resource "aws_eip" "eip" {
+    domain = "vpc"
+    }
   
 resource "aws_nat_gateway" "main" {
   allocation_id = aws_eip.eip.id
