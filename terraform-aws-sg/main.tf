@@ -1,9 +1,9 @@
 resource "aws_security_group" "allow_tls" {
-  name        = var.sg_name
-  description = var.sg_description
-  vpc_id      = var.vpc_id
+    name        = "${var.project_name}-${var.environment}-${var.sg_name}"
+    description = var.sg_description
+    vpc_id = var.vpc_id
 
-  dynamic ingress {
+    dynamic ingress {
         for_each = var.sg_ingress_rules
         content {
           description      = ingress.value["description"]
@@ -13,7 +13,8 @@ resource "aws_security_group" "allow_tls" {
           cidr_blocks      = ingress.value["cidr_blocks"]
         }     
     }
-# egress is alwasy static
+
+    # egress is always same for every sg, so keep egress static
     egress {
         from_port        = 0
         to_port          = 0
@@ -22,11 +23,13 @@ resource "aws_security_group" "allow_tls" {
         #ipv6_cidr_blocks = ["::/0"]
     }
 
-  tags = merge(
+    tags = merge(
         var.common_tags,
         var.sg_tags,
         {
             Name = "${var.project_name}-${var.environment}-${var.sg_name}"
         }
-  )
-} 
+
+    )
+
+}
