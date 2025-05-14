@@ -4,7 +4,7 @@ resource "aws_instance" "web" {
   vpc_security_group_ids = [ aws_security_group.roboshop-all.id ]
 
   tags = {
-    Name = "HelloWorld"
+    Name = "openvpn"
   }
 }
 
@@ -15,18 +15,18 @@ resource "aws_security_group" "roboshop-all" {
   
   ingress {
     description = "All all ports"
-    from_port   = var.inbound_traffic
-    to_port     = 0
+    from_port   = 0
+    to_port     = 65535
     protocol    = "tcp"
     cidr_blocks = var.cidr_blocks
   }
 
   egress {
-    from_port   = var.outbound_traffic
-    to_port     = 0
-    protocol    = 0
-    cidr_blocks = var.cidr_blocks
-  }
+  from_port   = var.outbound_traffic
+  to_port     = 0
+  protocol    = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+}
 
   tags = {
     Name = "roboshop-all"

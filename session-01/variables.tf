@@ -16,7 +16,7 @@ variable "inbound_traffic" {
 
 variable "outbound_traffic" {
   #type    = number
-  default = -1
+  default = 0
   # You can safely use 0 here if you're allowing all traffic (protocol = "-1")
 }
 
